@@ -85,7 +85,7 @@ $$π= \sum_{k \geq 0} {{(-1)^k} \over {(2k + 3)^3 - (2k + 3)}}$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$> 1000$$
+Convergence rate: $$> {1000 \cdot precision}$$
 ### - Madhava Leibniz:
 An old algorithm from 1674 simple to implement.
 
@@ -93,7 +93,7 @@ $$π= {4}\cdot\sum_{k=1}^∞ {(-1)^k \over { 2k + 1 } }$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$> 1000$$
+Convergence rate: $$> {1000 \cdot precision}$$
 ### - Euler:
 An algorithm from the Euler sequence.
 
@@ -101,7 +101,7 @@ $$π= \sqrt{6\cdot \sum_{k \geq 1} {1 \over k^2}}$$
 
 Time complexity: `O(n)`
 
-Convergence rate: `Too high`
+Convergence rate: $$> {1000 \cdot precision}$$
 ### - Wallis:
 An algorithm discovered 1675.
 
@@ -109,4 +109,12 @@ $$π= 2 \cdot \prod_{k=1}^∞ {2k \over 2k - 1} \cdot {2k \over 2k + 1}$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$> 1000$$
+Convergence rate: $$> {1000 \cdot precision}$$
+### - Zu Chongzhi:
+An algorithm discovered 429 - 500 AD.
+
+$$π= {355 \over 113}$$
+
+Time complexity: `O(1)`
+
+Convergence rate: $$1$$

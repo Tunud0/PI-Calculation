@@ -16,6 +16,7 @@ public class PI extends Calculation {
         Madhava_Leibniz,
         Euler,
         Wallis,
+        Zu_Chongzhi
     }
     public PI() {
         utilities = new MathUtilities();
@@ -29,7 +30,7 @@ public class PI extends Calculation {
             case Gauss_Legendre -> utilities.sqrt(new BigDecimal(precision), new BigDecimal(1)).longValue();
             case Madhava_De_Sangamagrama -> precision * (long) 3;
 
-            default -> (long) (precision*1E3);
+            default -> precision* (long) 5;
         };
         //Add to iterations to prevent accidents in small numbers
         iterations = Math.max(iterations + 1, 1);
@@ -55,6 +56,7 @@ public class PI extends Calculation {
             iterations = customIterations;
         //if the iterations are <= 0, they will be the result of the convergence rate.
         else iterations = iterations(precision.longValue(),algorithm);
+        BigDecimal three = BigDecimal.valueOf(3);
         switch (algorithm) {
             case Chudnovsky: {
                 for (long i = 0; i < iterations; i++) {
@@ -65,10 +67,10 @@ public class PI extends Calculation {
 
                     partialResult = first.multiply(second);
 
-                    first = new BigDecimal(3).multiply(bigI);
+                    first = three.multiply(bigI);
                     first = utilities.factorial(first);
                     second = utilities.factorial(bigI);
-                    second = utilities.pow(second, BigDecimal.valueOf(3));
+                    second = utilities.pow(second, three);
                     BigDecimal third = new BigDecimal("-262537412640768000");
                     third = utilities.pow(third, bigI);
 
@@ -142,7 +144,7 @@ public class PI extends Calculation {
                     BigDecimal first = utilities.pow(BigDecimal.ONE.negate(), bigI);
                     partialResult = first;
                     first = BigDecimal.TWO.multiply(bigI).add(BigDecimal.ONE);
-                    first = first.multiply(utilities.pow(new BigDecimal(3),bigI));
+                    first = first.multiply(utilities.pow(three,bigI));
                     partialResult = partialResult.divide(first, mathContext);
                     result = result.add(partialResult);
                 }
@@ -155,14 +157,14 @@ public class PI extends Calculation {
                     BigDecimal bigI = BigDecimal.valueOf(i);
                     partialResult = utilities.pow(BigDecimal.ONE.negate(),bigI);
                     //2n + 3
-                    BigDecimal TWOmNp3 = BigDecimal.TWO.multiply(bigI).add(new BigDecimal(3));
-                    BigDecimal first = utilities.pow(TWOmNp3,new BigDecimal(3));
+                    BigDecimal TWOmNp3 = BigDecimal.TWO.multiply(bigI).add(three);
+                    BigDecimal first = utilities.pow(TWOmNp3,three);
                     first = first.subtract(TWOmNp3);
                     partialResult = partialResult.divide(first, mathContext);
 
                     result = result.add(partialResult);
                 }
-                result = result.multiply(new BigDecimal(4)).add(new BigDecimal(3),mathContext);
+                result = result.multiply(new BigDecimal(4)).add(three,mathContext);
                 return result;
             }
             case Madhava_Leibniz: {
@@ -192,7 +194,7 @@ public class PI extends Calculation {
                 result = BigDecimal.ONE;
                 for (long i = 1; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
-                    BigDecimal twoN = new BigDecimal(2).multiply(bigI);
+                    BigDecimal twoN = BigDecimal.TWO.multiply(bigI);
                     BigDecimal first = twoN;
                     first = first.divide(twoN.subtract(BigDecimal.ONE),mathContext);
                     partialResult = first;
@@ -201,8 +203,11 @@ public class PI extends Calculation {
                     partialResult = partialResult.multiply(first);
                     result = result.multiply(partialResult);
                 }
-                result = result.multiply(new BigDecimal(2),mathContext);
+                result = result.multiply(BigDecimal.TWO,mathContext);
                 return result;
+            }
+            case Zu_Chongzhi: {
+                return new BigDecimal(355).divide(BigDecimal.valueOf(113),mathContext);
             }
             default: return BigDecimal.ZERO;
         }
