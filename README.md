@@ -78,6 +78,14 @@ $$π= \sqrt{12} \cdot \sum_{k = 0}^∞ {(-1)^k \over (2k + 1)3^k}$$
 Time complexity: `O(n)`
 
 Convergence rate: $$3 \cdot precision$$
+### - Abraham Sharp:
+An algorithm from 1699 AD that allow to calculate 71 decimal places of PI.
+
+$$π= 2\sqrt{3} \cdot \sum_{k = 0}^∞ {(-1)^k3^{-k} \over 2k + 1}$$
+
+Time complexity: `O(n)`
+
+Convergence rate: $$2 \cdot precision$$
 ### - Nilakantha:
 An algorithm from 15th century
 

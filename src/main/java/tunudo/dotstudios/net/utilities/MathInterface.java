@@ -7,5 +7,5 @@ public interface MathInterface {
     MathContext mathContext(BigDecimal precision);
     BigDecimal factorial(BigDecimal factorial);
     BigDecimal sqrt(BigDecimal n,BigDecimal precision);
-    BigDecimal pow(BigDecimal n,BigDecimal pow);
+    BigDecimal pow(BigDecimal n,BigDecimal pow, BigDecimal precision);
 }

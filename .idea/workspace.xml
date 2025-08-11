@@ -12,14 +12,15 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/calculations/PI$Algorithms.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/calculations/PI$Algorithms.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/calculations/PI.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/calculations/PI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/utilities/MathInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/utilities/MathInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/utilities/MathUtilities.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/tunudo/dotstudios/net/utilities/MathUtilities.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Calculation.class.uniqueId3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Main.class.uniqueId2" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/PI$Algorithms.class.uniqueId0" beforeDir="false" />
@@ -27,6 +28,8 @@
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/calculations/PI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/calculations/PI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/utilities/MathInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/utilities/MathInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/utilities/MathUtilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tunudo/dotstudios/net/utilities/MathUtilities.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

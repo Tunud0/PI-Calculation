@@ -18,8 +18,9 @@ public class MathUtilities implements MathInterface {
         if(factorial.compareTo(BigDecimal.ZERO) == 0 || factorial.compareTo(BigDecimal.ONE) == 0)
             return BigDecimal.ONE;
 
-        for (BigDecimal i = BigDecimal.TWO; i.compareTo(factorial) < 0; i = i.add(BigDecimal.ONE))
-            result = result.multiply(i);
+        long factorialLong = factorial.longValue();
+        for (long i = 2; i < factorialLong; i++)
+            result = result.multiply(BigDecimal.valueOf(i));
         return result;
     }
     /*
@@ -41,7 +42,11 @@ public class MathUtilities implements MathInterface {
         return x;
     }
     @Override
-    public BigDecimal pow(BigDecimal n, BigDecimal pow) {
+    public BigDecimal pow(BigDecimal n, BigDecimal pow, BigDecimal precision) {
+        if(pow.compareTo(BigDecimal.ZERO) == 0)
+            return BigDecimal.ONE;
+        else if(pow.compareTo(BigDecimal.ZERO) < 0)
+            return BigDecimal.ONE.divide(pow(n, pow.abs(), precision), mathContext(precision));
         return n.pow(pow.intValue());
     }
 }
