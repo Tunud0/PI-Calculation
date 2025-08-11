@@ -85,7 +85,7 @@ $$π= 2\sqrt{3} \cdot \sum_{k = 0}^∞ {(-1)^k3^{-k} \over 2k + 1}$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$2 \cdot precision$$
+Convergence rate: $$3 \cdot precision$$
 ### - Nilakantha:
 An algorithm from 15th century
 

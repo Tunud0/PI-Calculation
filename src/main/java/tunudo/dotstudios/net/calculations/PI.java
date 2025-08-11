@@ -29,8 +29,7 @@ public class PI extends Calculation {
             case Chudnovsky -> precision / 14;
             case Ramanujan -> precision / 6L;
             case Gauss_Legendre -> utilities.sqrt(new BigDecimal(precision), new BigDecimal(1)).longValue();
-            case Madhava_De_Sangamagrama -> precision * (long) 3;
-            case Abraham_Sharp ->  precision * (long) 2;
+            case Madhava_De_Sangamagrama,Abraham_Sharp -> precision * (long) 3;
             case Wallis -> precision; //This algorithm is too slow because of product instead of sum, even the precision might be >1000*precision for just some digits
 
             default -> precision* (long) 5;
