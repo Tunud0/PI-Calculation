@@ -17,48 +17,38 @@ public class PI extends Calculation {
         Madhava_Leibniz,
         Euler,
         Wallis,
-        Zu_Chongzhi
+        Zu_Chongzhi,
+        Monte_Carlo
     }
     public PI() {
         utilities = new MathUtilities();
     }
-
     @Override
     public long iterations(long precision, Algorithms algorithm) {
+        BigDecimal prBig = new BigDecimal(precision);
         long iterations = switch (algorithm) {
-            case Chudnovsky -> precision / 14;
+            case Chudnovsky -> precision / (long) 14.18;
             case Ramanujan -> precision / 6L;
-            case Gauss_Legendre -> utilities.sqrt(new BigDecimal(precision), new BigDecimal(1)).longValue();
+            case Gauss_Legendre -> utilities.sqrt(prBig, new BigDecimal(1)).longValue();
             case Madhava_De_Sangamagrama,Abraham_Sharp -> precision * (long) 3;
+            case Nilakantha,Madhava_Leibniz,Euler -> precision*1000;
             case Wallis -> precision; //This algorithm is too slow because of product instead of sum, even the precision might be >1000*precision for just some digits
-
-            default -> precision* (long) 5;
+            case Zu_Chongzhi -> 1;
+            case Monte_Carlo -> precision * 100;
         };
         //Add to iterations to prevent accidents in small numbers
         iterations = Math.max(iterations + 1, 1);
         return iterations;
     }
-
     @Override
-    public BigDecimal calculate(Algorithms algorithm, BigDecimal precision,long customIterations) {
+    public BigDecimal calculate(Algorithms algorithm, BigDecimal precision,long iterations) {
         if(precision.compareTo(BigDecimal.ZERO) < 0)
             return BigDecimal.ZERO;
-        else if(precision.compareTo(BigDecimal.ONE) <= 0)
-            //if it is 0 or 1, the for cycle will not start, it needs to be grater than 1
-            precision = precision.add(BigDecimal.TWO.subtract(precision));
         else precision = precision.add(BigDecimal.ONE);
         MathContext mathContext = utilities.mathContext(precision);
         BigDecimal result = BigDecimal.ZERO,
                 partialResult;
         //Iterations -> amount of times a for loop executes.
-        long precisionLong = precision.longValue();
-        long iterations;
-        //Custom iterations, to test the algorithms.
-        if(customIterations > 0)
-            //If the iterations are more than 0, than they will be applied as the value of the variable.
-            iterations = customIterations;
-        //if the iterations are <= 0, they will be the result of the convergence rate.
-        else iterations = iterations(precisionLong,algorithm);
         BigDecimal three = BigDecimal.valueOf(3),
                 four = BigDecimal.valueOf(4);
         switch (algorithm) {
@@ -170,7 +160,7 @@ public class PI extends Calculation {
             }
             case Nilakantha: {
                 //π = 3 + 4*Σ(k = 0,∞) (-1)^n / (2n + 3)^3 - (2n + 3)
-                for (long i = 0; i < iterations; i++) {
+                for (long i = 1; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
                     partialResult = utilities.pow(BigDecimal.ONE.negate(),bigI,precision);
                     //2n + 3
@@ -185,7 +175,6 @@ public class PI extends Calculation {
                 return result;
             }
             case Madhava_Leibniz: {
-                //π = 4 * Σ(k = 0,∞) 1 / 2k + 1
                 for (long i = 0; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
                     partialResult = utilities.pow(BigDecimal.ONE.negate(),bigI,precision);
@@ -196,7 +185,6 @@ public class PI extends Calculation {
                 return result;
             }
             case Euler: {
-                //π = sqrt(6 * Σ(k = 1,∞) 1/(k^2)
                 for (long i = 1; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
                     partialResult =  BigDecimal.ONE.divide(utilities.pow(bigI,BigDecimal.TWO,precision),mathContext);
@@ -226,12 +214,27 @@ public class PI extends Calculation {
             case Zu_Chongzhi: {
                 return new BigDecimal(355).divide(BigDecimal.valueOf(113),mathContext);
             }
+            case Monte_Carlo: {
+                BigDecimal randX,randY,originDist,circlePoints = BigDecimal.ZERO,squarePoints = BigDecimal.ZERO;
+                for (long i = 0; i < iterations; i++) {
+                    randX = BigDecimal.valueOf(Math.random() * 2 - 1);
+                    randY = BigDecimal.valueOf(Math.random() * 2 - 1);
+
+                    originDist = utilities.pow(randX,BigDecimal.TWO,precision).add(utilities.pow(randY,BigDecimal.TWO,precision));
+
+                    if(originDist.compareTo(BigDecimal.ONE) <= 0)
+                        circlePoints = circlePoints.add(BigDecimal.ONE);
+                    squarePoints = squarePoints.add(BigDecimal.ONE);
+                }
+                partialResult = circlePoints.divide(squarePoints, mathContext);
+                result = four.multiply(partialResult,mathContext);
+                return result;
+            }
             default: return BigDecimal.ZERO;
         }
     }
-
     @Override
-    public BigDecimal calculate(Algorithms algorithm, BigDecimal precision) {
-        return calculate(algorithm, precision,0);
+    public BigDecimal calculate(Algorithms algorithm, long precision) {
+        return calculate(algorithm, BigDecimal.valueOf(precision),iterations(precision,algorithm));
     }
 }

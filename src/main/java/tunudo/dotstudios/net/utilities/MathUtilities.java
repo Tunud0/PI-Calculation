@@ -2,8 +2,10 @@ package tunudo.dotstudios.net.utilities;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class MathUtilities implements MathInterface {
+    final int MAX_POW = 999999999;
     @Override
     public MathContext mathContext(BigDecimal precision) {
         MathContext result;
@@ -28,13 +30,17 @@ public class MathUtilities implements MathInterface {
     */
     @Override
     public BigDecimal sqrt(BigDecimal n, BigDecimal precision) {
-        BigDecimal TWO = BigDecimal.valueOf(2);
+        if(n.compareTo(BigDecimal.ZERO) < 0)
+            throw new ArithmeticException("Cannot sqrt a negative number");
+        if(n.compareTo(BigDecimal.ZERO) == 0)
+            return BigDecimal.ZERO;
+        precision = precision.add(BigDecimal.ONE).setScale(0, RoundingMode.HALF_UP);
         MathContext mc = mathContext(precision);
         BigDecimal x = n
                 .divide(BigDecimal.valueOf(3), mc);
         BigDecimal lastX = BigDecimal.valueOf(0);
         for (int i = 0; i < 50; i++) {
-            x = n.add(x.multiply(x)).divide(x.multiply(TWO), mc);
+            x = n.add(x.multiply(x)).divide(x.multiply(BigDecimal.TWO), mc);
             if (x.compareTo(lastX) == 0)
                 break;
             lastX = x;
@@ -47,6 +53,9 @@ public class MathUtilities implements MathInterface {
             return BigDecimal.ONE;
         else if(pow.compareTo(BigDecimal.ZERO) < 0)
             return BigDecimal.ONE.divide(pow(n, pow.abs(), precision), mathContext(precision));
+
+        if(pow.compareTo(BigDecimal.valueOf(MAX_POW)) >= 0)
+            pow = BigDecimal.valueOf(MAX_POW - 1);
         return n.pow(pow.intValue());
     }
 }

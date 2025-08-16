@@ -15,7 +15,7 @@ import tunudo.dotstudios.net.calculations.PI;
 public static void main(String[] args) {
     Pi pi = new PI();
     Algorithm algorithm = PI.Algorithms.Ramanujan; // = type of algorithm you want to make the calculation with;
-    BigDecimal precision = new BigDecimal(1000); // = numbers after the decimal point you want;
+    BigDecimal precision = new BigDecimal(10); // = numbers after the decimal point you want;
     BigDecimal pi = new PI().calculate(algorithm,precision);
     
     System.out.println("The value of PI is: " + pi); //Returns: 3.1415926535
@@ -56,7 +56,7 @@ Iterations:
 
 $$a = {{a_{0} + b_{0}} \over {2}}$$
 
-$$b = \sqrt(a_{0}b_{0})$$
+$$b = \sqrt{a_{0}b_{0}}$$
 
 $$t = t_{0} - p_{0}(a_{0} - a)^2$$
 
@@ -93,7 +93,7 @@ $$π= \sum_{k \geq 0} {{(-1)^k} \over {(2k + 3)^3 - (2k + 3)}}$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$> {1000 \cdot precision}$$
+Convergence rate: $$> {1000 \cdot precision}$$ Will never converge correctly
 ### - Madhava Leibniz:
 An old algorithm from 1674 simple to implement.
 
@@ -101,7 +101,8 @@ $$π= {4}\cdot\sum_{k=1}^∞ {(-1)^k \over { 2k + 1 } }$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$> {1000 \cdot precision}$$
+Convergence rate: $$> 1000$$
+
 ### - Euler:
 An algorithm from the Euler sequence.
 
@@ -109,7 +110,7 @@ $$π= \sqrt{6\cdot \sum_{k \geq 1} {1 \over k^2}}$$
 
 Time complexity: `O(n)`
 
-Convergence rate: $$> {1000 \cdot precision}$$
+Convergence rate: $$> 1000$$
 ### - Wallis:
 An algorithm discovered 1675.
 
@@ -126,3 +127,22 @@ $$π= {355 \over 113}$$
 Time complexity: `O(1)`
 
 Convergence rate: $$1$$
+### - Monte Carlo:
+This algorithm have been discovered from some mathematicians and physics during the project Manhattan.
+The name come from the famous Casinò.
+
+Variable initialization:
+$$circlePoints = 0$$
+$$squarePoints = 0$$
+Iterations:
+$$randX= rand(-1,1)$$
+$$randY= rand(-1,1)$$
+$$originDist = randX^2 + randY^2$$
+$$originDist <= 0: circlePoints += 1$$
+$$originDist > 0: squarePoints += 1$$
+Final formula:
+$$π= 4 \cdot {circlePoints \over squarePoints}$$
+
+Time complexity: `O(n)`
+
+Convergence rate: $$100*precision$$
