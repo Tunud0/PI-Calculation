@@ -131,16 +131,26 @@ Convergence rate: $$1$$
 This algorithm have been discovered from some mathematicians and physics during the project Manhattan.
 The name come from the famous Casinò.
 
+
 Variable initialization:
+
 $$circlePoints = 0$$
+
 $$squarePoints = 0$$
+
 Iterations:
 $$randX= rand(-1,1)$$
+
 $$randY= rand(-1,1)$$
+
 $$originDist = randX^2 + randY^2$$
+
 $$originDist <= 0: circlePoints += 1$$
+
 $$originDist > 0: squarePoints += 1$$
+
 Final formula:
+
 $$π= 4 \cdot {circlePoints \over squarePoints}$$
 
 Time complexity: `O(n)`
