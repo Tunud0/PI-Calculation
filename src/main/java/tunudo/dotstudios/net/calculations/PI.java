@@ -4,6 +4,7 @@ import tunudo.dotstudios.net.utilities.MathUtilities;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class PI extends Calculation {
     private final MathUtilities utilities;
@@ -44,20 +45,26 @@ public class PI extends Calculation {
     public BigDecimal calculate(Algorithms algorithm, BigDecimal precision,long iterations) {
         if(precision.compareTo(BigDecimal.ZERO) < 0)
             return BigDecimal.ZERO;
-        else precision = precision.add(BigDecimal.ONE);
-        MathContext mathContext = utilities.mathContext(precision);
+        else if(precision.compareTo(BigDecimal.ZERO) == 0) precision = precision.add(BigDecimal.ONE);
+        MathContext mathContext = utilities.mathContext(precision.add(BigDecimal.TEN));
         BigDecimal result = BigDecimal.ZERO,
                 partialResult;
         //Iterations -> amount of times a for loop executes.
         BigDecimal three = BigDecimal.valueOf(3),
                 four = BigDecimal.valueOf(4);
+
+        //nU = number utilities. Those are the numbers on the cycle. They are outside to have better performances
         switch (algorithm) {
             case Chudnovsky: {
+                BigDecimal six = new BigDecimal(6);
+                BigDecimal nU1 = new BigDecimal(545140134);
+                BigDecimal nU2 = new BigDecimal(13591409);
+                BigDecimal nU3 = new BigDecimal("-262537412640768000");
                 for (long i = 0; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
-                    BigDecimal first = new BigDecimal(6).multiply(bigI);
+                    BigDecimal first = six.multiply(bigI);
                     first = utilities.factorial(first);
-                    BigDecimal second = new BigDecimal(545140134).multiply(bigI).add(new BigDecimal(13591409));
+                    BigDecimal second = nU1.multiply(bigI).add(nU2);
 
                     partialResult = first.multiply(second);
 
@@ -65,33 +72,35 @@ public class PI extends Calculation {
                     first = utilities.factorial(first);
                     second = utilities.factorial(bigI);
                     second = utilities.pow(second, three,precision);
-                    BigDecimal third = new BigDecimal("-262537412640768000");
-                    third = utilities.pow(third, bigI, precision);
+                    BigDecimal third = utilities.pow(nU3, bigI, precision);
 
                     partialResult = partialResult.divide(first.multiply(second).multiply(third), mathContext);
                     result = result.add(partialResult);
                 }
                 result = new BigDecimal(426880).multiply(utilities.sqrt(new BigDecimal(10005),precision)).divide(result, mathContext);
-                return result;
             }
+            break;
             case Ramanujan: {
                 /*
                 Formula: π = 99^2 / 2sqrt(2) * Σ(k = 0,∞) ( 4k! * 26390k + 1103 / k!^4 * 396^4k )
                 Time complexity:
                 */
+                BigDecimal nU1 = new BigDecimal(26390);
+                BigDecimal nU2 = new BigDecimal(1103);
+                BigDecimal nU3 = new BigDecimal(396);
                 for (long i = 0; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
                     BigDecimal first = four.multiply(bigI);
                     first = utilities.factorial(first);
-                    BigDecimal second = new BigDecimal(26390).multiply(bigI);
-                    second = second.add(new BigDecimal(1103));
+                    BigDecimal second = nU1.multiply(bigI);
+                    second = second.add(nU2);
 
                     partialResult = first.multiply(second);
 
                     first = bigI;
                     first = utilities.factorial(first);
                     first = utilities.pow(first, four,precision);
-                    second = new BigDecimal(396);
+                    second = nU3;
                     second = utilities.pow(second, four.multiply(bigI),precision);
 
                     partialResult = partialResult.divide(first.multiply(second), mathContext);
@@ -99,8 +108,8 @@ public class PI extends Calculation {
                 }
                 result = result.multiply(BigDecimal.TWO.multiply(utilities.sqrt(BigDecimal.TWO,precision)));
                 result = new BigDecimal(9801).divide(result, mathContext);
-                return result;
             }
+            break;
             case Gauss_Legendre: {
                 //a0 = 1,b0 = 1/sqrt(2),p0 = 1,t0 = 1/4
                 //a = a + b / 2
@@ -130,8 +139,8 @@ public class PI extends Calculation {
                 result = an.add(bn);
                 result = utilities.pow(result,BigDecimal.TWO,precision);
                 result = result.divide(tn.multiply(four), mathContext);
-                return result;
             }
+            break;
             case Madhava_De_Sangamagrama: {
                 for (long i = 0; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
@@ -143,8 +152,8 @@ public class PI extends Calculation {
                     result = result.add(partialResult);
                 }
                 result = result.multiply(utilities.sqrt(new BigDecimal(12),precision), mathContext);
-                return result;
             }
+            break;
             case Abraham_Sharp: {
                 for (long i = 0; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
@@ -156,8 +165,8 @@ public class PI extends Calculation {
                     result = result.add(partialResult);
                 }
                 result = result.multiply(BigDecimal.TWO.multiply(utilities.sqrt(three,precision)),mathContext);
-                return result;
             }
+            break;
             case Nilakantha: {
                 //π = 3 + 4*Σ(k = 0,∞) (-1)^n / (2n + 3)^3 - (2n + 3)
                 for (long i = 1; i < iterations; i++) {
@@ -172,8 +181,8 @@ public class PI extends Calculation {
                     result = result.add(partialResult);
                 }
                 result = result.multiply(four).add(three,mathContext);
-                return result;
             }
+            break;
             case Madhava_Leibniz: {
                 for (long i = 0; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
@@ -182,19 +191,20 @@ public class PI extends Calculation {
                     result = result.add(partialResult);
                 }
                 result = result.multiply(four,mathContext);
-                return result;
             }
+            break;
             case Euler: {
+                BigDecimal nU1 = new BigDecimal(6);
                 for (long i = 1; i < iterations; i++) {
                     BigDecimal bigI = BigDecimal.valueOf(i);
                     partialResult =  BigDecimal.ONE.divide(utilities.pow(bigI,BigDecimal.TWO,precision),mathContext);
 
                     result = result.add(partialResult);
                 }
-                result = result.multiply(new BigDecimal(6));
+                result = result.multiply(nU1);
                 result = utilities.sqrt(result,precision);
-                return result;
             }
+            break;
             case Wallis: {
                 result = BigDecimal.ONE;
                 for (long i = 1; i < iterations; i++) {
@@ -209,11 +219,12 @@ public class PI extends Calculation {
                     result = result.multiply(partialResult);
                 }
                 result = result.multiply(BigDecimal.TWO,mathContext);
-                return result;
             }
+            break;
             case Zu_Chongzhi: {
-                return new BigDecimal(355).divide(BigDecimal.valueOf(113),mathContext);
+                result = new BigDecimal(355).divide(BigDecimal.valueOf(113),mathContext);
             }
+            break;
             case Monte_Carlo: {
                 BigDecimal randX,randY,originDist,circlePoints = BigDecimal.ZERO,squarePoints = BigDecimal.ZERO;
                 for (long i = 0; i < iterations; i++) {
@@ -228,10 +239,9 @@ public class PI extends Calculation {
                 }
                 partialResult = circlePoints.divide(squarePoints, mathContext);
                 result = four.multiply(partialResult,mathContext);
-                return result;
             }
-            default: return BigDecimal.ZERO;
         }
+        return result.setScale(precision.intValue(), RoundingMode.HALF_UP);
     }
     @Override
     public BigDecimal calculate(Algorithms algorithm, long precision) {

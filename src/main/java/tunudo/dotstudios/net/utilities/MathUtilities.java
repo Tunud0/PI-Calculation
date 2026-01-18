@@ -3,6 +3,7 @@ package tunudo.dotstudios.net.utilities;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.TreeMap;
 
 public class MathUtilities implements MathInterface {
     final int MAX_POW = 999999999;
@@ -14,15 +15,32 @@ public class MathUtilities implements MathInterface {
         } else result = new MathContext(precision.intValue());
         return result;
     }
+    TreeMap<Long, BigDecimal> map = new TreeMap<>();
     @Override
     public BigDecimal factorial(BigDecimal factorial) {
-        BigDecimal result = factorial;
-        if(factorial.compareTo(BigDecimal.ZERO) == 0 || factorial.compareTo(BigDecimal.ONE) == 0)
-            return BigDecimal.ONE;
+        long n = factorial.longValue();
+        if (n <= 1) return BigDecimal.ONE;
 
-        long factorialLong = factorial.longValue();
-        for (long i = 2; i < factorialLong; i++)
+        if (map.containsKey(n)) return map.get(n);
+
+        Long closestKey = map.floorKey(n);
+        long startValue;
+        BigDecimal result;
+
+        if (closestKey != null) {
+            startValue = closestKey + 1;
+            result = map.get(closestKey);
+        } else {
+            startValue = 2;
+            result = BigDecimal.ONE;
+        }
+
+        for (long i = startValue; i <= n; i++) {
             result = result.multiply(BigDecimal.valueOf(i));
+            if (i % 10 == 0) map.put(i, result);
+        }
+
+        map.put(n, result);
         return result;
     }
     /*
