@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import tunudo.dotstudios.net.calculations.PI;
 
 public static void main(String[] args) {
-    Pi pi = new PI();
     Algorithm algorithm = PI.Algorithms.Ramanujan; // = type of algorithm you want to make the calculation with;
     BigDecimal precision = new BigDecimal(10); // = numbers after the decimal point you want;
     BigDecimal pi = new PI().calculate(algorithm,precision);
@@ -26,7 +25,7 @@ public static void main(String[] args) {
 ### Recent algorithms that are often used for massive computations.
 ### - Chudnovsky:
 
-Extremely precise, but slow. It is used in world-record calculations of π digits.
+Extremely precise. It is used in world-record calculations of π digits.
 
 $$π= {{426880\sqrt{10005}} \over {\sum_{k=1}^∞ {{{(6k)!(545140134k + 13591409)}} \over { (3k)!(k!)^3(-262537412640768000)^k } }}}$$
 
@@ -128,8 +127,9 @@ Time complexity: `O(1)`
 
 Convergence rate: $$1$$
 ### - Monte Carlo:
-This algorithm have been discovered from some mathematicians and physics during the project Manhattan.
+This algorithm have been discovered from some mathematicians and physics during the project Manhattan and it is a statistical way to calculate pi.
 The name come from the famous Casinò.
+It is the least affidabile: it can take bilion iterations for just some digits.
 
 
 Variable initialization:
